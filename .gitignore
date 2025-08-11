@@ -1,0 +1,6 @@
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# No need to ignore node_modules since static site

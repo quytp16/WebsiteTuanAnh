@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Điếu Cày Store</title>
+  <style>
+    :root { --bg:#f7f7f7; --ink:#0f172a; --muted:#64748b; --pri:#2563eb; --card:#fff; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--ink); }
+    header { background:var(--ink); color:#fff; padding:14px 20px; text-align:center; }
+    .container { max-width: 1000px; margin: auto; padding: 20px; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .card { background: var(--card); border-radius: 12px; padding: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    .card img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; background:#e5e7eb; }
+    .card h3 { margin:10px 0 6px; }
+    .price { font-weight:700; }
+    form { background: var(--card); padding: 18px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+    label { display:block; margin-top:10px; font-weight:600; }
+    input, select, textarea, button { width:100%; padding:10px; margin-top:6px; border:1px solid #e5e7eb; border-radius:10px; }
+    textarea { resize: vertical; }
+    button { background: var(--pri); color:#fff; border:none; cursor:pointer; font-weight:600; }
+    button:disabled { opacity:.6; cursor:not-allowed; }
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width:700px){ .row { grid-template-columns:1fr; } }
+    .alert { padding:12px; border-radius:10px; margin-top:12px; display:none; }
+    .alert.success { background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; }
+    .alert.error { background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+    footer { color: var(--muted); text-align:center; padding:30px; }
+    .muted { color: var(--muted); font-size:14px; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Điếu Cày Store</h1>
+</header>
+
+<main class="container">
+  <h2>Sản phẩm</h2>
+  <div class="products">
+    <div class="card">
+      <img src="img/dieu-cay-tre.jpg" alt="Điếu cày tre truyền thống">
+      <h3>Điếu cày tre truyền thống</h3>
+      <p class="price">150.000₫</p>
+    </div>
+    <div class="card">
+      <img src="img/dieu-cay-inox.jpg" alt="Điếu cày inox mini">
+      <h3>Điếu cày inox mini</h3>
+      <p class="price">220.000₫</p>
+    </div>
+    <div class="card">
+      <img src="img/thuoc-lao-100g.jpg" alt="Thuốc lào Tiên Lãng 100g">
+      <h3>Thuốc lào Tiên Lãng 100g</h3>
+      <p class="price">90.000₫</p>
+    </div>
+    <div class="card">
+      <img src="img/thuoc-lao-200g.jpg" alt="Thuốc lào Quảng Trị 200g">
+      <h3>Thuốc lào Quảng Trị 200g</h3>
+      <p class="price">170.000₫</p>
+    </div>
+  </div>
+
+  <h2 style="margin-top:36px">Đặt hàng</h2>
+  <!-- Replace FORM_ENDPOINT with your Formspree endpoint (e.g. https://formspree.io/f/abcde123) -->
+  <form id="orderForm" action="FORM_ENDPOINT" method="POST">
+    <!-- honeypot to reduce spam -->
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+    <!-- email subject -->
+    <input type="hidden" name="_subject" value="Đơn hàng mới - Điếu Cày Store">
+    <!-- where to redirect (optional for non-AJAX fallback) -->
+    <input type="hidden" name="_redirect" value="">
+    <!-- allow formspree to reply to customer -->
+    <input type="hidden" name="_replyto" value="">
+
+    <div class="row">
+      <div>
+        <label>Họ và tên</label>
+        <input type="text" name="name" required>
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" name="email" required>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Số điện thoại</label>
+        <input type="tel" name="phone" required>
+      </div>
+      <div>
+        <label>Số lượng</label>
+        <input type="number" name="qty" min="1" value="1" required>
+      </div>
+    </div>
+    <label>Địa chỉ</label>
+    <textarea name="address" rows="2" required></textarea>
+
+    <label>Chọn sản phẩm</label>
+    <select name="product" required>
+      <option value="">-- Chọn sản phẩm --</option>
+      <option value="Điếu cày tre truyền thống (150000)">Điếu cày tre truyền thống - 150.000₫</option>
+      <option value="Điếu cày inox mini (220000)">Điếu cày inox mini - 220.000₫</option>
+      <option value="Thuốc lào Tiên Lãng 100g (90000)">Thuốc lào Tiên Lãng 100g - 90.000₫</option>
+      <option value="Thuốc lào Quảng Trị 200g (170000)">Thuốc lào Quảng Trị 200g - 170.000₫</option>
+    </select>
+
+    <div class="muted">* Bản tĩnh (Formspree sẽ gửi nội dung đơn về Gmail bạn cấu hình)</div>
+    <button id="submitBtn" type="submit">Gửi đơn hàng</button>
+
+    <div id="ok" class="alert success">Đặt hàng thành công! Vui lòng kiểm tra email của bạn.</div>
+    <div id="err" class="alert error">Gửi thất bại. Vui lòng thử lại sau.</div>
+  </form>
+
+  <p class="muted" style="margin-top:10px">
+    Mẹo: Bạn có thể bật xác thực domain khi dùng GitHub Pages để tăng độ tin cậy gửi mail.
+  </p>
+</main>
+
+<footer>© <script>document.write(new Date().getFullYear())</script> Điếu Cày Store</footer>
+
+<script>
+(function(){
+  const form = document.getElementById('orderForm');
+  const ok = document.getElementById('ok');
+  const err = document.getElementById('err');
+  const btn = document.getElementById('submitBtn');
+
+  function show(el){ el.style.display='block'; }
+  function hide(el){ el.style.display='none'; }
+
+  form.addEventListener('submit', async function(e){
+    // If user forgot to replace endpoint, show guidance
+    if (form.action === 'FORM_ENDPOINT') {
+      e.preventDefault();
+      hide(ok); hide(err);
+      alert('Bạn cần thay FORM_ENDPOINT bằng endpoint Formspree của bạn (ví dụ: https://formspree.io/f/abcd1234).');
+      return;
+    }
+    e.preventDefault();
+    hide(ok); hide(err);
+    btn.disabled = true; btn.textContent = 'Đang gửi...';
+    const data = new FormData(form);
+    // set _replyto as customer email for easy reply
+    if (data.get('email')) data.set('_replyto', data.get('email'));
+
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+      if (res.ok) {
+        form.reset();
+        show(ok);
+      } else {
+        show(err);
+      }
+    } catch (e) {
+      show(err);
+    } finally {
+      btn.disabled = false; btn.textContent = 'Gửi đơn hàng';
+    }
+  });
+})();
+</script>
+</body>
+</html>
