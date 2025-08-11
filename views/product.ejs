@@ -1,0 +1,20 @@
+<%- include('layout', { title: product.name, body: (function(){ %>
+  <div class="grid">
+    <div>
+      <img src="<%= product.image || '/img/dieu-cay-tre.jpg' %>" alt="<%= product.name %>" style="width:100%; border-radius:12px;">
+    </div>
+    <div>
+      <h2><%= product.name %></h2>
+      <p><%= product.description %></p>
+      <p><b><%= formatVND(product.price) %></b></p>
+      <p>Tồn kho: <%= product.stock %></p>
+      <form action="/cart/add" method="post">
+        <input type="hidden" name="product_id" value="<%= product.id %>">
+        <input type="number" name="qty" value="1" min="1" style="width:80px">
+        <button class="btn" <%= product.stock<=0 ? 'disabled' : '' %>>
+          <%= product.stock<=0 ? 'Hết hàng' : 'Thêm vào giỏ' %>
+        </button>
+      </form>
+    </div>
+  </div>
+<% }).call(this) }) %>

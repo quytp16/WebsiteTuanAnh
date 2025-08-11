@@ -1,0 +1,37 @@
+<%- include('../layout', { title: 'Admin - Sản phẩm', body: (function(){ %>
+  <h2>Quản lý sản phẩm</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Tên</th><th>Mô tả</th><th>Giá</th><th>Tồn</th><th>Ảnh</th><th>Hành động</th></tr></thead>
+    <tbody>
+      <% products.forEach(p => { %>
+        <tr>
+          <form action="/admin/products/<%= p.id %>" method="post">
+            <td><%= p.id %></td>
+            <td><input name="name" value="<%= p.name %>"></td>
+            <td><input name="description" value="<%= p.description %>"></td>
+            <td><input name="price" type="number" value="<%= p.price %>"></td>
+            <td><input name="stock" type="number" value="<%= p.stock %>"></td>
+            <td><input name="image" value="<%= p.image %>"></td>
+            <td>
+              <button class="btn secondary">Lưu</button>
+              <form action="/admin/products/<%= p.id %>/delete" method="post" class="inline">
+                <button class="btn danger">Xóa</button>
+              </form>
+            </td>
+          </form>
+        </tr>
+      <% }) %>
+      <tr>
+        <form action="/admin/products" method="post">
+          <td>+</td>
+          <td><input name="name" placeholder="Tên"></td>
+          <td><input name="description" placeholder="Mô tả"></td>
+          <td><input name="price" type="number" placeholder="Giá"></td>
+          <td><input name="stock" type="number" placeholder="Tồn"></td>
+          <td><input name="image" placeholder="/img/..."></td>
+          <td><button class="btn">Thêm</button></td>
+        </form>
+      </tr>
+    </tbody>
+  </table>
+<% }).call(this) }) %>

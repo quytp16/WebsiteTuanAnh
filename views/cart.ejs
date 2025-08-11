@@ -1,0 +1,40 @@
+<%- include('layout', { title: 'Giỏ hàng', body: (function(){ %>
+  <h2>Giỏ hàng</h2>
+  <% if (cart.length === 0) { %>
+    <p>Giỏ hàng trống.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr><th>Sản phẩm</th><th>SL</th><th>Đơn giá</th><th>Thành tiền</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% cart.forEach(item => { %>
+          <tr>
+            <td><%= item.name %></td>
+            <td>
+              <form action="/cart/update" method="post" class="inline">
+                <input type="hidden" name="id" value="<%= item.id %>">
+                <input type="number" name="qty" value="<%= item.qty %>" min="0" style="width:70px">
+                <button class="btn secondary">Cập nhật</button>
+              </form>
+            </td>
+            <td><%= formatVND(item.price) %></td>
+            <td><%= formatVND(item.price * item.qty) %></td>
+            <td>
+              <form action="/cart/update" method="post" class="inline">
+                <input type="hidden" name="id" value="<%= item.id %>">
+                <input type="hidden" name="qty" value="0">
+                <button class="btn danger">Xóa</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <p style="text-align:right"><b>Tổng: <%= formatVND(total) %></b></p>
+    <div style="display:flex; gap:10px; justify-content:flex-end;">
+      <form action="/cart/clear" method="post"><button class="btn secondary">Xóa giỏ</button></form>
+      <a class="btn" href="/checkout">Thanh toán</a>
+    </div>
+  <% } %>
+<% }).call(this) }) %>

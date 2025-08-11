@@ -1,0 +1,20 @@
+<%- include('../layout', { title: 'Admin - Đơn hàng', body: (function(){ %>
+  <h2>Danh sách đơn hàng</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Khách</th><th>Email</th><th>SĐT</th><th>Địa chỉ</th><th>Tổng</th><th>Ngày</th><th></th></tr></thead>
+    <tbody>
+      <% orders.forEach(o => { %>
+        <tr>
+          <td>#<%= o.id %></td>
+          <td><%= o.customer_name %></td>
+          <td><%= o.email %></td>
+          <td><%= o.phone || '' %></td>
+          <td><%= o.address %></td>
+          <td><%= formatVND(o.total) %></td>
+          <td><%= new Date(o.created_at).toLocaleString('vi-VN') %></td>
+          <td><a class="btn" href="/admin/orders/<%= o.id %>">Xem</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% }).call(this) }) %>

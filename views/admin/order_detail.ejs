@@ -1,0 +1,24 @@
+<%- include('../layout', { title: 'Admin - Chi tiết đơn', body: (function(){ %>
+  <h2>Đơn hàng #<%= order.id %></h2>
+  <p><b>Khách:</b> <%= order.customer_name %></p>
+  <p><b>Email:</b> <%= order.email %> | <b>Điện thoại:</b> <%= order.phone || '' %></p>
+  <p><b>Địa chỉ:</b> <%= order.address %></p>
+  <p><b>Tổng:</b> <%= formatVND(order.total) %></p>
+  <p><b>Ngày đặt:</b> <%= new Date(order.created_at).toLocaleString('vi-VN') %></p>
+
+  <h3>Sản phẩm</h3>
+  <table>
+    <thead><tr><th>Tên</th><th>SL</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead>
+    <tbody>
+      <% items.forEach(it => { %>
+        <tr>
+          <td><%= it.name %></td>
+          <td><%= it.qty %></td>
+          <td><%= formatVND(it.price) %></td>
+          <td><%= formatVND(it.price * it.qty) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <p><a class="btn" href="/admin/orders">Quay lại</a></p>
+<% }).call(this) }) %>

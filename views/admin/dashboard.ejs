@@ -1,0 +1,41 @@
+<%- include('../layout', { title: 'Admin - Dashboard', body: (function(){ %>
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>Dashboard</h2>
+    <form action="/admin/logout" method="post"><button class="btn secondary">Đăng xuất</button></form>
+  </div>
+  <div class="grid">
+    <div class="stat"><div>Đơn hàng</div><div style="font-size:28px;"><b><%= ordersCount %></b></div></div>
+    <div class="stat"><div>Doanh thu</div><div style="font-size:28px;"><b><%= formatVND(revenue) %></b></div></div>
+    <div class="stat"><div>Tổng SL đã bán</div><div style="font-size:28px;"><b><%= itemsSold %></b></div></div>
+  </div>
+  <h3 style="margin-top:24px;">Tồn kho</h3>
+  <table>
+    <thead><tr><th>ID</th><th>Tên</th><th>Giá</th><th>Tồn</th><th>Ảnh</th><th>Hành động</th></tr></thead>
+    <tbody>
+      <% products.forEach(p => { %>
+        <tr>
+          <form action="/admin/products/<%= p.id %>" method="post">
+            <td><%= p.id %></td>
+            <td><input name="name" value="<%= p.name %>"></td>
+            <td><input name="price" type="number" value="<%= p.price %>"></td>
+            <td><input name="stock" type="number" value="<%= p.stock %>"></td>
+            <td><input name="image" value="<%= p.image %>"></td>
+            <td>
+              <button class="btn secondary">Lưu</button>
+            </td>
+          </form>
+        </tr>
+      <% }) %>
+      <tr>
+        <form action="/admin/products" method="post">
+          <td>+</td>
+          <td><input name="name" placeholder="Tên"></td>
+          <td><input name="price" type="number" placeholder="Giá"></td>
+          <td><input name="stock" type="number" placeholder="Tồn"></td>
+          <td><input name="image" placeholder="/img/..."></td>
+          <td><button class="btn">Thêm</button></td>
+        </form>
+      </tr>
+    </tbody>
+  </table>
+<% }).call(this) }) %>

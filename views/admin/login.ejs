@@ -1,0 +1,9 @@
+<%- include('../layout', { title: 'Admin - Đăng nhập', body: (function(){ %>
+  <h2>Đăng nhập Admin</h2>
+  <% if (error) { %><p style="color:#ef4444"><%= error %></p><% } %>
+  <form action="/admin/login" method="post" class="grid">
+    <div><label>Tên đăng nhập</label><br/><input name="username" required style="width:100%; padding:10px;"></div>
+    <div><label>Mật khẩu</label><br/><input type="password" name="password" required style="width:100%; padding:10px;"></div>
+    <div style="grid-column: 1 / -1; text-align:right;"><button class="btn">Đăng nhập</button></div>
+  </form>
+<% }).call(this) }) %>

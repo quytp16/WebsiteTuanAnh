@@ -1,0 +1,6 @@
+<%- include('layout', { title: 'Đặt hàng thành công', body: (function(){ %>
+  <h2>Cảm ơn bạn!</h2>
+  <p>Đơn hàng của bạn đã được ghi nhận. Mã đơn: <b>#<%= orderId %></b>.</p>
+  <p>Hóa đơn và chi tiết đơn hàng đã được gửi về email.</p>
+  <a class="btn" href="/">Tiếp tục mua sắm</a>
+<% }).call(this) }) %>

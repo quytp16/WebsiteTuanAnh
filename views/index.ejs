@@ -1,0 +1,22 @@
+<%- include('layout', { title: 'Trang chủ', body: (function(){ %>
+  <h2>Sản phẩm</h2>
+  <div class="products">
+    <% products.forEach(p => { %>
+      <div class="card">
+        <img src="<%= p.image || '/img/dieu-cay-tre.jpg' %>" alt="<%= p.name %>">
+        <div class="content">
+          <h3><a href="/product/<%= p.id %>"><%= p.name %></a></h3>
+          <div><b><%= formatVND(p.price) %></b></div>
+          <div>Tồn kho: <%= p.stock %></div>
+          <form action="/cart/add" method="post">
+            <input type="hidden" name="product_id" value="<%= p.id %>">
+            <input type="number" name="qty" value="1" min="1" style="width:70px">
+            <button class="btn" <%= p.stock<=0 ? 'disabled' : '' %>>
+              <%= p.stock<=0 ? 'Hết hàng' : 'Thêm vào giỏ' %>
+            </button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% }).call(this) }) %>

@@ -1,0 +1,27 @@
+<%- include('layout', { title: 'Thanh toán', body: (function(){ %>
+  <h2>Thông tin thanh toán</h2>
+  <form action="/checkout" method="post" class="grid">
+    <div>
+      <label>Họ tên</label><br/>
+      <input type="text" name="name" required style="width:100%; padding:10px;">
+    </div>
+    <div>
+      <label>Email</label><br/>
+      <input type="email" name="email" required style="width:100%; padding:10px;">
+    </div>
+    <div>
+      <label>Điện thoại</label><br/>
+      <input type="text" name="phone" style="width:100%; padding:10px;">
+    </div>
+    <div>
+      <label>Địa chỉ</label><br/>
+      <input type="text" name="address" required style="width:100%; padding:10px;">
+    </div>
+    <div style="grid-column: 1 / -1; text-align:right;">
+      <b>Tổng cần thanh toán: <%= formatVND(total) %></b>
+    </div>
+    <div style="grid-column: 1 / -1; text-align:right;">
+      <button class="btn">Đặt hàng</button>
+    </div>
+  </form>
+<% }).call(this) }) %>
